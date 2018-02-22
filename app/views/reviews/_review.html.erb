@@ -1,0 +1,8 @@
+
+<li>
+	<p> User Review : <%= @review.body %> </p><br/>
+		Rating : <%= @review.rating %> <br/> 
+		User Id : <%= @review.user_id %><br/>
+		<%= link_to "Edit", edit_review_path(@review.id) %> 
+		<%= link_to "Delete", review_path(@review.id), method: :delete, data: {confirm: "Are you sure to delete this review ? " }, remote: true %>
+</li>

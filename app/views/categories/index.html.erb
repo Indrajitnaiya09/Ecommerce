@@ -1,0 +1,17 @@
+<div align="center">
+	<h2> Listing all categories(<%= @categories.length %>)</h2>
+	<table bgcolor="White">
+		<th>ID</th>
+		<th>Name</th>
+		<% @categories.each do |item| %>
+		<tr border: 1px>
+			<td border: 1px><%= item.id %></td>
+			<td border: 1px><%= link_to item.name, category_path(item.id) %> (<%= item.products.count %>)</td>
+			<td border: 1px><input type = button name = "Submit" value = "Edit"></td>
+			<td border: 1px><input type = button name = "Submit" value = "Delete"></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+
+<%= link_to "add category", new_category_path %>

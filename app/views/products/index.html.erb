@@ -1,0 +1,45 @@
+
+<div align="center">
+	<h1> Listing all Product(<%= @products.length %>)</h1>
+	<% if @products.empty? %>
+	<h3>No Products Found </h3>
+	<% else %>
+	<table bgcolor="White">
+		<th>ID</th>
+		<th>   </th>
+		<th>Name</th>
+		<th>Price</th>
+		<th>Stock</th>
+		<th>Description</th>
+		<th>Category_Id</th>
+		<th>   </th>
+		<th>   </th>
+		<% @products.each_with_index do |item,index| %>
+		<tr border: 1px>
+			<td border: 1px><%= index + 1 %></td>
+			<td border: 1px><%= image_tag item.cover, size:"200x150" %></td>
+			<td border: 1px><%= link_to item.name.upcase, product_path(item) %></td>
+			<td border: 1px><%= item.price %>  -  INR</td>
+			<td border: 1px><%= item.stock %></td>
+			<td border: 1px><%= item.description %></td>
+			<td border: 1px> <% if !item.category.nil? %> <%= item.category.name %> <% end %></td>
+			<td border: 1px><%= form_for CartLineItem.new, remote:true do |f| %>
+							<%= f.hidden_field :quantity, value: 1 %><br/>
+							<%= f.hidden_field :product_id, value: item.id %>
+							<%= f.submit "Add-Item" %>
+							<% end %>
+			</td>
+			<td border: 1px><%= form_for WishList.new do |f| %>
+							<%= f.hidden_field :product_id, value: item.id %>
+							<%= f.submit "Wishlist" %>
+							<% end %></td>
+		</tr>
+		<% end %>
+	</table>
+	<% end %>
+</div>
+
+<% if (user_signed_in?) && (can? :create, Product.new) %>
+	<%= link_to "add product", new_product_path %>
+<% end %>
+

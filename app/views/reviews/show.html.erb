@@ -1,0 +1,18 @@
+<h2> <%= @review.product.name %> </h2>
+<h2> <%= @review.product.id %> </h2>
+<p> Your Updated Review : <%= @review.body %> </p>
+	Rating : <%= @review.rating %> <br/> 
+	<%#= link_to "Edit", edit_review_path(@review.id) %> 
+	<%#= link_to "Delete", review_path(@review.id), method: :delete, data: {confirm: "Are you sure to delete this review ? " } %>
+
+<h4>Other reviews on this product -> </h4>
+<% @product.reviews.each do |element| %>
+	<% if element.id == @review.id %>
+	<% else %>
+	<ol>
+		<li>
+			<%= element.body %>
+		</li>
+	<% end %>
+	</ol>
+<% end %>

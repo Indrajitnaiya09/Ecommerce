@@ -1,0 +1,4 @@
+<p><%= @category.name %></p>
+<p>
+	<%= link_to "edit", edit_category_path(@category.id) %> | <%= link_to "delete", category_path(@category.id), method: :delete, data: {confirm: "Are you Sure ?"} %>
+</p>

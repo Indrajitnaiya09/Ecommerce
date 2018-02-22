@@ -1,0 +1,61 @@
+
+<p>Product Name : <%= @product.name%></p>
+<p>Product Price :<%= @product.price%></p>
+<p>Product Description : <%= @product.description%> | <%= @product.cod_eligible ? "Cod Eligible " : "Cod not Eligible" %></p>
+<p>No. of Stock :<%= @product.stock%></p>
+<p>Product Category :<%= Category.find(@product.category_id).name%></p>
+
+
+<%#= image_tag(@product.image_url, size:"200x150") %>
+<%= image_tag(@product.cover.url, size:"200x150") %>
+
+<p3><%= link_to "Edit", edit_product_path(@product) %></p3> |
+<p3><%= link_to "Delete", product_path(@product.id), method: :delete, data: {confirm: "Are you sure ?"} %></p3>
+
+<h2>Add to Cart </h2>
+<%if user_signed_in? %>
+	<%= form_for CartLineItem.new do |f| %>
+	<label>Quantity : </label>
+	<%= f.select :quantity, (1..10).to_a %><br/>
+	<%= f.hidden_field :product_id, value: @product.id %>
+	<%= f.submit "Add-Item" %>
+	<% end %>
+<% else %>
+	<p>You need to sign_in before adding products to your cart </p>
+<% end %>
+
+<h3>---------------------------------------------------------------------------------------------------------------------------------------Rewiews-----------------------------------------------------------------------------------------</h3>
+<% if @product.reviews.empty? %>
+	<p>No reviews found , be the first one to review </p>
+<% else %>
+	<h3>Listing All the reviews</h3>
+	<ol id="reviewList">
+		<% @product.reviews.each do |review| %>
+		<li id="review_<%= review.id %>">
+			<p> User Review : <%= review.body %> </p><br/>
+				Rating : <%= review.rating %> <br/> 
+				User Id : <%= review.user_id %><br/>
+				<%= link_to "Edit", edit_review_path(review.id) %> 
+				<%= link_to "Delete", review_path(review.id), method: :delete, data: {confirm: "Are you sure to delete this review ? " }, remote: true %>
+		</li>
+		<% end %>
+	</ol>
+<%end%>
+
+<h3>Add your review </h3>
+<%= form_for(@review, remote: true) do |f| %>
+	
+	<label for= "review_body"> Body </label><br/>
+	<%= f.text_area :body %><br/>
+
+	<%= f.hidden_field :product_id, value: @product.id %>
+
+	<br/>
+	<label> Rating </label><br/>
+	<%= f.radio_button :rating, 1%> *
+	<%= f.radio_button :rating, 2%> **
+	<%= f.radio_button :rating, 3%> ***
+	<%= f.radio_button :rating, 4%> ****
+	<%= f.radio_button :rating, 5%> *****  <br/>
+	<%= f.submit "Add Review" %>
+<% end %>

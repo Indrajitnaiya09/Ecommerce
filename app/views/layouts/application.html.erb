@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecommerce</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js" type="text/javascript"></script>
+    <script src="javascript/jquery.growl.js" type="text/javascript"></script>
+    <link href="stylesheets/jquery.growl.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+  <div align="right">
+    <% if user_signed_in? %>
+        <p>welcome <i><b> <%= current_user.username %></i></b></p>
+        <%= link_to "Account Setting", edit_user_registration_path %> | <%= link_to "logout", destroy_user_session_path, method: :delete %> |
+        <%= link_to "Address", addresses_path %> |
+      <%= link_to "cart(#{current_user.cart_line_items.pluck(:quantity).inject(:+)})", cart_line_items_path, id: 'cart' %> |
+      <%= link_to "Wishlist(#{current_user.wish_lists.count})", wish_lists_path %>  <br/> <br/>
+    <% else %>
+        <%= link_to "Register", new_user_registration_path %> | <%= link_to "Login" , new_user_session_path %> |
+    <% end %>
+  </div>
+
+  	<!--<a href="/products">Product</a> |
+  	<a href="/categories">Category</a>-->
+
+
+  	<%= link_to "Categories", categories_path %> |
+  	<%= link_to "Products", products_path %> 
+
+    <%= notice %>
+    <%= alert %>
+
+
+    <%= yield %>
+    <% if user_signed_in? %>
+      <p>Your current IP is : <%= current_user.current_sign_in_ip %></p>
+    <% end %>
+
+  </body>
+</html>

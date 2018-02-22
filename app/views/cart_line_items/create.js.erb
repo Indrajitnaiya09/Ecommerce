@@ -1,0 +1,3 @@
+//$('#cart').html("Cart(<%= current_user.cart_line_items.pluck(:quantity).inject(:+) %>)");
+$('#cart').html("<%= total_item_calculation %>");
+swal("Thanks!", "You have successfully added product into your cart !", "success");

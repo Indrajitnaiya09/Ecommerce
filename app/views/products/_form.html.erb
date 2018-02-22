@@ -1,0 +1,53 @@
+<%= form_for @product do |f| %>
+	<% if @product.errors.any? %>
+	<h3> These errors prohibited the form from being saved: </h3>
+	<ul>
+		<% @product.errors.full_messages.each do |msg| %>
+		<li> <%= msg %></li>
+		<% end %>
+	</ul>
+	<% end %>
+
+	<label for="product_category_id"> Category : </label></br>
+	<%= f.collection_select :category_id, Category.all, :id, :name, prompt: "Select Category" %><br/>
+	
+	<label for="product_name"> Name : </label> <br/>
+	<%= f.text_field :name, placeholder: "Enter name" %><span id = "nameMsg"></span><br/>
+
+	<label for="product_description"> Description : </label> <br/>
+	<%= f.text_area :description %><br/>
+
+	<label for="product_price"> Price : </label> <br/>
+	<%= f.text_field :price, min: 1 %><br/>
+
+	<label for="product_stock"> Stock : </label> <br/>
+	<%= f.text_field :stock, min: 1 %><br/>
+
+	<%= f.check_box :cod_eligible %> <label for="product_cod_eligible">COD Eligible </label> <br/>
+
+	<label for="product_image_url">Image Url </label><br/>
+	<%= f.text_field :image_url %> <br/>
+
+	<%= f.label :cover %>
+	<%= f.file_field :cover %>
+
+	<%= f.submit %>
+<% end %>
+
+<script >
+	var nameHandle = document.getElementById('product_name');
+	var nameMsgHandle = document.getElementById('nameMsg');
+
+	nameHandle.addEventListener("focus", function(){
+		nameMsgHandle.innerHTML = "Enter the Product Name";
+	},false);
+
+	nameHandle.addEventListener("blur", function(){
+		if (nameHandle.value == ""){
+			nameMsgHandle.innerHTML = "can't be null";
+		}
+		else{
+			nameMsgHandle.innerHTML = "";
+		}
+	},false);
+</script>

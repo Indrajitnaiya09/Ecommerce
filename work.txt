@@ -1,0 +1,27 @@
+city location resturant user review review_count bookmark photoes cuisunes
+
+
+city 1 - m location 
+location 1 - m resturant
+resturant 1 - m reviews_count
+resturent 1 - m photoes
+resturent 1 - m cusines
+
+user 1 - m review
+review 1 - m  commnent
+user 1 - 1 bookmark
+bookmark 1 - m resturent
+bookmark 1 - m user
+
+
+
+city- id , name
+location - id , name , city_id
+resturent - id, name, location_id, review_id, cusines_id, photo_id, food_item_id
+cousines - id, type
+picture - id , picture_url
+user - id, name, comment_id
+review - id, title, review_id
+comment - id,
+bookmark - id, user_id, resturent_id
+food_item - id, food_item_name
